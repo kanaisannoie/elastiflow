@@ -31,12 +31,13 @@ services:
       # You will need to create the path and permissions on the local file system where Elasticsearch will store data.
       # For example...
       #   mkdir /var/lib/elasticsearch && chown -R 1000:1000 /var/lib/elasticsearch
-      - /var/lib/elastiflow_es:/usr/share/elasticsearch/data
+      - es_data:/usr/share/elasticsearch/data
+      #- /var/lib/elastiflow_es:/usr/share/elasticsearch/data
     environment:
       # JVM Heap size
       #   - this should be at least 2GB for simple testing, receiving only a few flows per second.
       #   - for production environments upto 31GB is recommended.
-      ES_JAVA_OPTS: '-Xms2g -Xmx2g'
+      ES_JAVA_OPTS: '-Xms1g -Xmx1g'
 
       cluster.name: elastiflow
 
@@ -91,3 +92,11 @@ services:
       ELASTIFLOW_NETFLOW_IPV4_PORT: 2055
       ELASTIFLOW_SFLOW_IPV4_PORT: 6343
       ELASTIFLOW_IPFIX_TCP_IPV4_PORT: 4739
+
+volumes:
+  es_data:
+    driver_opts:
+      type: none
+      device: /home/jin/hdd1/monitors/elastiflow_data/
+      o: bind
+
